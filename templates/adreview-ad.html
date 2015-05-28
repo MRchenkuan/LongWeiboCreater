@@ -1,0 +1,54 @@
+{% extends 'adreview.html' %}
+
+{% block board %}
+    <div class="board right" style="width: 83%;margin: 10px 10px 20px 0" >
+        <div class="title title-box">广告审核</div>
+        <table class="center datatable" style="margin: 10px auto">
+            <tr style="background: #2e2c2c;color: #ffffff">
+                <td onclick="sortingtable(document.getElementsByTagName('table')[0].getElementsByTagName('tr'),0)">广告ID</td>
+                <td onclick="sortingtable(document.getElementsByTagName('table')[0].getElementsByTagName('tr'),1)">申请日期</td>
+                <td onclick="sortingtable(document.getElementsByTagName('table')[0].getElementsByTagName('tr'),2)">公司名称</td>
+                <td onclick="sortingtable(document.getElementsByTagName('table')[0].getElementsByTagName('tr'),3)">广告图片</td>
+                <td onclick="sortingtable(document.getElementsByTagName('table')[0].getElementsByTagName('tr'),4)">图片跳转</td>
+                <td onclick="sortingtable(document.getElementsByTagName('table')[0].getElementsByTagName('tr'),5)">广告类型</td>
+                <td onclick="sortingtable(document.getElementsByTagName('table')[0].getElementsByTagName('tr'),6)">联系方式</td>
+                <td onclick="sortingtable(document.getElementsByTagName('table')[0].getElementsByTagName('tr'),7)">广告生效时间</td>
+                <td onclick="sortingtable(document.getElementsByTagName('table')[0].getElementsByTagName('tr'),8)">广告结束时间</td>
+{#                <td>广告状态</td>#}
+                <td>启用广告</td>
+{#                <td>屏蔽广告</td>#}
+            </tr>
+
+
+            {% for items in ad %}
+
+               <tr id="adstatid-{{items.statid}}">
+                <td>{{items.id}}</td>
+                <td>{{items.creattime|date:"m-d"  }}</td>
+                <td>{{items.coname  }}</td>
+                <td>{{items.imgurl  }}</td>
+                <td>{{items.imglink  }}</td>
+                <td>{{items.adtype  }}</td>
+                <td>{{items.contact  }}</td>
+                <td><input name="startdate" type="button" value="{{items.efftime|date:"Y-m-d"}}" onclick="new Calendar().show(this);"></td>
+                <td><input name="enddate" type="button" value="{{items.exptime|date:"Y-m-d"}}" onclick="new Calendar().show(this);"></td>
+{#                <td name="{{ items.stat }}">{{items.stat}}</td>#}
+                {% if items.stat == '已经生效' %}
+                        <td>
+                        <div class="switch switch-on" onclick="switchstatues(this,{{ items.statid }})">
+                            <div class="switch-on-block">关/开</div>
+                        </div>
+                        </td>
+                    {% else %}
+                        <td>
+                        <div class="switch switch-off" onclick="switchstatues(this,{{ items.statid }})">
+                            <div class="switch-off-block">关/开</div>
+                        </div>
+                        </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+{% endblock %}

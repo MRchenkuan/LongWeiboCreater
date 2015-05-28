@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+         html{background:rgb(23,44,60);color: #202020;font-size: 12px;font-family: "微软雅黑", Arial, sans-serif}
+        /*按钮样式*/
+        .btn{text-align:center;margin:0 5px;display:block;float:left;padding: 10px;min-width: 80px;border-radius: 5px;box-shadow: 0 0 1px #3d3d3d}
+        .btn-lp{border-top: 1px #888 solid;border-bottom:1px #888 solid;border-left:1px #888 solid; ;margin:0;box-shadow:none;border-radius: 5px 0 0 5px;}
+        .btn-mp{border: 1px #888 solid;;margin:0;box-shadow:none;border-radius: 0;}
+        .btn-rp{border-top: 1px #888 solid;border-bottom:1px #888 solid;border-right:1px #888 solid; ;margin:0;box-shadow:none;border-radius: 0 5px 5px 0;}
+        .btn-nv{background: #dddddd;color: #8d8d8d;text-shadow: 0 1px 0 #ffffff;}
+
+        .btn-green{background: #73e854;color: #53a83d;text-shadow: 0 1px 0 #81ff60;}
+        .btn-green:hover{background: #7eff5d;color: #61c346;text-shadow: 0 1px 0 #c7ffb4;box-shadow: 0 0 5px #3d3d3d}
+        .btn-green:active{background: #4c9937;color: #3c762c;text-shadow: 0 1px 0 #428530;box-shadow: 0 0 1px #3d3d3d}
+
+        .btn-default{background: #dddddd;color: #8d8d8d;text-shadow: 0 1px 0 #ffffff;}
+        .btn-default:hover{background: #f1f1f1;color: #8d8d8d;text-shadow: 0 1px 0 #ffffff;box-shadow: 0 0 5px #3d3d3d}
+        .btn-default:active{background: #b5b5b5;color: #8d8d8d;text-shadow: 0 1px 0 #bababa;box-shadow: 0 0 1px #3d3d3d}
+
+        .btn-red{background: #dd3333;color: #a2242d;text-shadow: 0 1px 0 #ff3a46;}
+        .btn-red:hover{background: #ff3944;color: #a2242d;text-shadow: 0 1px 0 #ff7776;box-shadow: 0 0 5px #3d3d3d}
+        .btn-red:active{background: #af2830;color: #a2242d;text-shadow: 0 1px 0 #c52d36;box-shadow: 0 0 1px #3d3d3d}
+
+        /* UI样式 */
+        .title{display: block;background: #a11715;border-radius: 10px 10px 0 0;padding: 0 10px;border-bottom: 1px solid grey;}
+        .title-box{font-size:24px;height: 50px;line-height: 50px;color: #fff;text-shadow:0 0 5px #0c0202;}
+        .board{border:1px solid #fff;background:white;min-width: 100px;min-height: 100px;border-radius: 10px;box-shadow: 0 0 1px black;overflow: hidden;}
+        .textbox{font-size:18px;padding:0 10px;color: #8c8c8c;border:none;box-shadow: 0 0 5px #c5c5c5 inset;min-width: 240px;line-height: 100%;height: 40px;border-radius: 10px;}
+
+        /*背景样式*/
+        .passed{background: #73E854;color: #53a83d;text-shadow: 0 1px 0 #81ff60;}
+        .rejected{background: #C5C5C5;color: #777777;text-shadow: 0 1px 0 #ffffff;}
+        .waiting{background: #8EB2FF;color: #405071;text-shadow: 0 1px 0 #cbd3ff;}
+        /*表格样式*/
+        .datatable{border-collapse:collapse;border-spacing:0;}
+        .datatable td{height: 20px;border: 1px solid #808080;margin: 0;padding: 5px;text-align: center}
+
+        /*其他小属性样式*/
+        .center{margin: 0 auto}
+
+    </style>
+</head>
+<body>
+<div class="board center" style="width: 480px">
+    <span class="title title-box">广告申请页面</span>
+    <table class="datatable center">
+        <tr>
+            <td>广告类型</td>
+            <td>
+                <select class="textbox" type="text" id="adtype">
+                    <option value="2">小型图片广告</option>
+                    <option value="3">中型图片广告</option>
+                    <option value="4">大型图片广告</option>
+                    <option value="5">图片轮播</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>公司名称</td>
+            <td><input class="textbox" type="text" id="coname"></td>
+        </tr>
+        <tr>
+            <td>联系方式</td>
+            <td><input class="textbox" type="text" id="contact"></td>
+        </tr>
+        <tr>
+            <td>联系人</td>
+            <td><input class="textbox" type="text" id="user"></td>
+        </tr>
+        <tr>
+            <td>图片地址</td>
+            <td><input class="textbox" type="text" id="imgurl"></td>
+        </tr>
+        <tr>
+            <td>图片跳转</td>
+            <td><input class="textbox" type="text" id="imglink"></td>
+        </tr>
+
+        <tr>
+            <td>提交</td>
+            <td><a id="adsubmit" class="btn btn-green" onclick="submit()">提交</a></td>
+        </tr>
+    </table>
+</div>
+<script>
+    document.getElementById('adsubmit').onclick = function(){
+        var cname = document.getElementById('coname').value;
+        var contact = document.getElementById('contact').value;
+        var user = document.getElementById('user').value;
+        var imgurl = document.getElementById('imgurl').value;
+        var imglink = document.getElementById('imglink').value;
+        var adtype = document.getElementById('adtype').value;
+        thiselem = this;
+        var url="/addAd/?cname="+cname+"&contact="+contact+"&user="+user+""+"&imgurl="+imgurl+"&imglink="+imglink+"&adtype="+adtype;
+        var xmlhttp;
+        if (window.XMLHttpRequest){
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp=new XMLHttpRequest();
+        }else{
+            // code for IE6, IE5
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        thiselem.setAttribute('disabled','disabled');
+        thiselem.setAttribute('value','提交中...');
+        thiselem.setAttribute('class','btn btn-default');
+
+        xmlhttp.onreadystatechange=function(){
+            if (xmlhttp.readyState==4 && xmlhttp.status==200){
+                alert(xmlhttp.responseText);
+            }
+        };
+        xmlhttp.open("GET",url,true);
+        xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xmlhttp.send(url);
+
+    };
+</script>
+</body>
+</html>

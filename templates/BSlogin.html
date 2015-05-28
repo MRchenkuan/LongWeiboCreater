@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        html{background:rgb(23,44,60);color: #202020;font-size: 12px;font-family: Arial,Helvetica,sans-serif}
+        /*按钮样式*/
+        .btn{text-align:center;margin:0 5px;display:block;float:left;padding: 10px;min-width: 80px;border-radius: 5px;box-shadow: 0 0 1px #3d3d3d;border: 1px solid grey}
+        .btn-lp{border-top: 1px #888 solid;border-bottom:1px #888 solid;border-left:1px #888 solid; ;margin:0;box-shadow:none;border-radius: 5px 0 0 5px;}
+        .btn-mp{border: 1px #888 solid;;margin:0;box-shadow:none;border-radius: 0;}
+        .btn-rp{border-top: 1px #888 solid;border-bottom:1px #888 solid;border-right:1px #888 solid; ;margin:0;box-shadow:none;border-radius: 0 5px 5px 0;}
+        .btn-nv{background: #dddddd;color: #8d8d8d;text-shadow: 0 1px 0 #ffffff;border: none}
+
+        .btn-green{background: #dddddd;color: #8d8d8d;text-shadow: 0 1px 0 #ffffff;box-shadow: 0 0 5px black;border: 1px solid white}
+        .btn-green:hover{background: #93F879;color: #419829;text-shadow: 0 1px 0 #c7ffb4;box-shadow: 0 0 5px #3d3d3d}
+        .btn-green:active{background: #4c9937;color: #3c762c;text-shadow: 0 1px 0 #428530;box-shadow: 0 0 5px #3d3d3d inset}
+
+        .btn-default{background: #dddddd;color: #8d8d8d;text-shadow: 0 1px 0 #ffffff;}
+        .btn-default:hover{background: #f1f1f1;color: #8d8d8d;text-shadow: 0 1px 0 #ffffff;box-shadow: 0 0 5px #3d3d3d}
+        .btn-default:active{background: #b5b5b5;color: #8d8d8d;text-shadow: 0 1px 0 #bababa;box-shadow: 0 0 1px #3d3d3d}
+
+        .btn-red{background: #dddddd;color: #8d8d8d;text-shadow: 0 1px 0 #ffffff;box-shadow: 0 0 5px black;border: 1px solid white}
+        .btn-red:hover{background: #ff3944;color: #a2242d;text-shadow: 0 1px 0 #ff7776;box-shadow: 0 0 5px #3d3d3d}
+        .btn-red:active{background: #af2830;color: #a2242d;text-shadow: 0 1px 0 #c52d36;box-shadow: 0 0 5px #3d3d3d inset}
+
+        /* UI样式 */
+        .title{display: block;background: #a11715;border-radius: 10px 10px 0 0;padding: 0 10px;border-bottom: 1px solid grey;}
+        .title-box{font-size:24px;height: 50px;line-height: 50px;color: #fff;text-shadow:0 0 5px #0c0202;}
+        .board{border:1px solid #fff;background:white;min-width: 100px;min-height: 100px;border-radius: 10px;box-shadow: 0 0 1px black;overflow: hidden;}
+        .textbox{font-size:18px;padding:0 10px;color: #8c8c8c;border:none;box-shadow: 0 0 5px #c5c5c5 inset;min-width: 240px;line-height: 100%;height: 40px;border-radius: 10px;}
+
+        /*背景样式*/
+        .waiting{background: #73E854;color: #53a83d;text-shadow: 0 1px 0 #81ff60;}
+        .rejected{background: #C5C5C5;color: #777777;text-shadow: 0 1px 0 #ffffff;}
+        /*.waiting{background: #8EB2FF;color: #405071;text-shadow: 0 1px 0 #cbd3ff;}*/
+        /*表格样式*/
+        .datatable{border-collapse:collapse;border-spacing:0;}
+        .datatable td{height: 20px;border: none;margin: 0;padding: 15px;text-align: center}
+
+        /*其他小属性样式*/
+        .center{margin: 0 auto}
+    </style>
+</head>
+<body>
+    <div class="board center" style="width: 500px;margin-top: 200px">
+        <span class="title title-box">长沙好工作后台系统</span>
+        <form id="logininfo" action="/login/" method="POST">
+            <table class="datatable center">
+                <tr><td><input name="reference" type="hidden" value="{{ reference }}"></td><td>{{ msg }}</td></tr>
+                <tr>
+                    <td>用户名</td>
+                    <td><input class="textbox" type="text" id="username" name="username"></td>
+                </tr>
+                <tr>
+                    <td>密码</td>
+                    <td><input class="textbox" type="password" id="password" name="password"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <a class="btn btn-green" id="submit">登 录</a>
+                        <a class="btn btn-red" onclick="var pswdctr=document.getElementById('password');if(!pswdctr.value)return false;pswdctr.setAttribute('type',pswdctr.type=='password'?'text':'password')">显示密码</a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('submit').onclick=function(){
+            document.getElementById('logininfo').submit()
+        }
+    </script>
+<div style="position: absolute;bottom: 0;text-align: center;width: 100%"><span style="margin: 0 auto;color: #ffffff;">Copyright ©2014 长沙好工作 Powered By Adol Version 1.0.0</span></div>
+</body>
+</html>

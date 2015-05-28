@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+
+    <title></title>
+</head>
+
+<style>
+    /*****************/
+    .widget{width: 620px;height: auto;float: left;border: 1px solid #808080;margin-bottom: 5px}
+    .widget span{width: 100%;height: auto;background: #404040;color: white;display: inline-block}
+
+    .widget span span{width: 33%;height: auto;color: white;display: inline-table;background: #93bd7e}
+    .widget span input{width: 32%;display: inline-table}
+
+    .widget input{width: 98%;height: 25px;text-align: center;border: none}
+    .widget input[type='text']{color: #9a9a9a}
+    .widget textarea{color: #9a9a9a;width: 98%;height: 100px;border: none}
+    .widget .selection{width: auto;background: #777d9c;color: white;border: 1px #66182c;height: 25px;border-radius:5px;margin:0 0 3px 3px;}
+    .widget .selection:hover{background: #9fa7d0;position:relative;left:-1px;top:-1px}
+
+    .contaner{width: 625px;float: left}
+
+    .widget select{height: 25px;margin:10px auto;border:1px solid #9a9a9a}
+
+    #submit,#check{font-size:24px;width: 200px;height: 50px;background: #a8c1d1;border: 1px solid #802c17;font-weight: 900;color: white}
+    #check{background: #93bd7e;}
+</style>
+<body>
+<form id="cpg" name="cpg" action="./c" method="post" >
+
+    <div class="contaner">
+        <div class="widget">
+            <span>职位标题</span>
+            <input type="text" name="title" value="请填写" onkeyup="inputchecker(this)" onfocus="this.value=='请填写'?this.value='':this.value=this.value" onblur="this.value=this.value||'请填写'"/>
+        </div>
+        <div class="widget">
+            <span>公司名字</span>
+            <input type="text" name="coname" value="请填写" onkeyup="inputchecker(this)" onfocus="this.value=='请填写'?this.value='':this.value=this.value" onblur="this.value=this.value||'请填写'"/>
+        </div>
+        <div class="widget">
+            <span>公司性质</span>
+            <input id="cotype" type="text" name="cotype" value="请选择" readonly />
+            <div id="cotypeOptions">
+                <input class='selection' type="button" value="国企"/>
+                <input class='selection' type="button" value="民营"/>
+                <input class='selection' type="button" value="合资"/>
+                <input class='selection' type="button" value="外商独资"/>
+                <input class='selection' type="button" value="上市公司"/>
+                <input class='selection' type="button" value="股份制企业"/>
+                <input class='selection' type="button" value="代表处"/>
+                <input class='selection' type="button" value="国家机关"/>
+                <input class='selection' type="button" value="事业单位"/>
+                <input class='selection' type="button" value="其他"/>
+            </div>
+        </div>
+        <div class="widget">
+            <span>公司行业</span>
+            <select id="coindustry" type="text" class="t text" name="coindustry" onchange="chooseIndustry(this);"></select>
+        </div>
+        <div class="widget">
+            <span>招聘人数</span>
+            <input type="text" name="recruiting" value="请填写" onkeyup="inputchecker(this)" onfocus="this.value=='请填写'?this.value='':this.value=this.value" onblur="this.value=this.value||'请填写'"/>
+        </div>
+        <div class="widget">
+            <span>工作区域 (如：长沙芙蓉区、广州天河区，请不要超过<font color='red'> 6 </font>个字)</span>
+            <input type="text" name="location" value="请填写" onkeyup="inputchecker(this)" onfocus="this.value=='请填写'?this.value='':this.value=this.value" onblur="this.value=this.value||'请填写'"/>
+        </div>
+        <div class="widget">
+            <span>工作经历</span>
+            <input type="text" class="t text" id="yearcount" name="yearcount" value="请选择" readonly />
+            <div id="yearcountOptions">
+                <input class='selection' type="button" value="限应届生"/>
+                <input class='selection' type="button" value="1年以下"/>
+                <input class='selection' type="button" value="1～3年"/>
+                <input class='selection' type="button" value="3～5年"/>
+                <input class='selection' type="button" value="5～10年"/>
+                <input class='selection' type="button" value="10年以上"/>
+            </div>
+        </div>
+        <div class="widget">
+            <span>学历要求</span>
+            <input type="text" class="t text" id="degree" name="degree" value="请选择" readonly />
+            <div id="degreeOptions">
+                <input class='selection' type="button" value="无"/>
+                <input class='selection' type="button" value="高中/中专/中技及以下"/>
+                <input class='selection' type="button" value="大专及同等学历"/>
+                <input class='selection' type="button" value="本科/学士及同等学历"/>
+                <input class='selection' type="button" value="硕士/研究生及同等学历"/>
+                <input class='selection' type="button" value="博士及以上"/>
+                <input class='selection' type="button" value="其他"/>
+            </div>
+
+        </div>
+        <div class="widget">
+            <span>工资待遇</span>
+            <input type="text" class="t text" id="treatment" name="treatment" value="请填写/选择" onkeyup="inputchecker(this)" onfocus="this.value=='请填写/选择'?this.value='':this.value=this.value" onblur="this.value=this.value||'请填写/选择'"/>
+            <div id="treatmentOptions">
+                <input class='selection' type="button" value="1000~2000元"/>
+                <input class='selection' type="button" value="2000～4000元"/>
+                <input class='selection' type="button" value="4000～6000元"/>
+                <input class='selection' type="button" value="6000～8000元"/>
+                <input class='selection' type="button" value="8000～10000元"/>
+                <input class='selection' type="button" value="10000～15000元"/>
+                <input class='selection' type="button" value="15000～20000元"/>
+                <input class='selection' type="button" value="20000～30000元"/>
+                <input class='selection' type="button" value="30000～50000以上"/>
+            </div>
+        </div>
+        <div class="widget">
+            <span>公司规模</span>
+            <input id="cosize" type="text" class="t text" name="cosize" value="请选择" readonly />
+            <div id="cosizeOptions">
+                <input class='selection' type="button" value="20人以下"/>
+                <input class='selection' type="button" value="20～99人"/>
+                <input class='selection' type="button" value="100～499人"/>
+                <input class='selection' type="button" value="500～999人"/>
+                <input class='selection' type="button" value="1000～9999人"/>
+                <input class='selection' type="button" value="10000以上人"/>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="contaner">
+        <div class="widget">
+            <span>职位介绍</span>
+            <textarea type="text" class="coinfotext" name="opinfo" onkeyup="inputchecker(this)" onfocus="this.value=='请填写'?this.value='':this.value=this.value" onblur="this.value=this.value||'请填写'">请填写</textarea>
+        </div>
+
+        <div class="widget">
+            <span>岗位职责</span>
+            <textarea type="text" class="coinfotext" name="duty" onkeyup="inputchecker(this)" onfocus="this.value=='请填写'?this.value='':this.value=this.value" onblur="this.value=this.value||'请填写'">请填写</textarea>
+        </div>
+
+        <div class="widget">
+            <span>岗位要求</span>
+            <textarea type="text" id="require" class="coinfotext" name="require" onkeyup="inputchecker(this)" onfocus="this.value=='请填写'?this.value='':this.value=this.value" onblur="this.value=this.value||'请填写'">请填写</textarea>
+        </div>
+        <div class="widget">
+            <span>公司介绍</span>
+            <textarea type="text" class="coinfotext" name="coinfo" onkeyup="inputchecker(this)" onfocus="this.value=='请填写'?this.value='':this.value=this.value" onblur="this.value=this.value||'请填写'">请填写</textarea>
+        </div>
+
+        <div class="widget">
+            <span>联系方式</span>
+            <table style="width:100%">
+                <tr style="background:#93bd7e;color: white "><td>联系人姓名</td><td>联系电话</td><td>联系邮箱</td></tr>
+                <tr>
+                    <td><input type="text" class="subtitle" name="custname" value="请填写" onkeyup="checklinkinfo(this)" onfocus="this.value=='请填写'?this.value='':this.value=this.value" onblur="this.value=this.value||'请填写'"/></td>
+                    <td><input type="text" class="subtitle" name="phone" value="请填写" onkeyup="checklinkinfo(this)" onfocus="this.value=='请填写'?this.value='':this.value=this.value" onblur="this.value=this.value||'请填写'"/></td>
+                    <td><input type="text" class="subtitle" name="email" value="请填写" onkeyup="checklinkinfo(this)" onfocus="this.value=='请填写'?this.value='':this.value=this.value" onblur="this.value=this.value||'请填写'"/></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="widget">
+        <span>请填写验证码</span>
+        <input type="text" id="capture" value="请填写" onkeyup="inputchecker(this)" onfocus="this.value=='请填写'?this.value='':this.value=this.value" onblur="this.value=this.value||'请填写'"/>
+        <input type="button" id="sendCapture" value="点击发送验证码">
+        <input type="button" id="validCapture" value="点击验证">
+    </div>
+
+    <input id="submit" class="button" type="submit" value="预览" onclick="return globalChecker()">
+    <input id="check" class="button" type="button" value="检查" onclick="globalChecker()">
+
+</form>
+</body>
+<script>
+
+document.getElementById('sendCapture').onclick = function(){
+    thiselem = this;
+    var url="./sendCapture/";
+    var xmlhttp;
+    if (window.XMLHttpRequest){
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp=new XMLHttpRequest();
+    }else{
+        // code for IE6, IE5
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    thiselem.setAttribute('disabled','disabled');
+    thiselem.setAttribute('value','发送中...');
+
+    xmlhttp.onreadystatechange=function(){
+
+        if (xmlhttp.readyState==4 && xmlhttp.status==200){
+            console.log(xmlhttp.responseText);
+
+            jsonstr = eval("("+xmlhttp.responseText+")");
+            console.log(jsonstr);
+            if(jsonstr.stat ==200){
+                var i = 10;
+                var timer = setInterval(function(){
+                    thiselem.setAttribute('value',"发送成功,"+(i--)+'秒后重新发送');
+                    if(i<=0){
+                        thiselem.removeAttribute('disabled');
+                        thiselem.setAttribute('value','重新发送');
+                        clearInterval(timer)
+                    }},1000)
+            }else if(jsonstr.stat === 503){
+                alert(jsonstr.msg);
+                thiselem.setAttribute('value','再次发送');
+            }
+
+        }
+    };
+    xmlhttp.open("GET",url,true);
+    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    xmlhttp.send(url);
+};
+
+document.getElementById('validCapture').onclick = function(){
+    thiselem = this;
+    var url="./validCapture/?capture="+document.getElementById('capture').value;
+    var xmlhttp;
+    if (window.XMLHttpRequest){
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp=new XMLHttpRequest();
+    }else{
+        // code for IE6, IE5
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    thiselem.setAttribute('disabled','disabled');
+    thiselem.setAttribute('value','发送中...');
+
+    xmlhttp.onreadystatechange=function(){
+        if (xmlhttp.readyState==4 && xmlhttp.status==200){
+            alert(xmlhttp.responseText);
+        }
+    };
+    xmlhttp.open("GET",url,true);
+    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    xmlhttp.send(url);
+
+};
+
+// 事件初始化
+selector('cotypeOptions','cotype');
+selector('cosizeOptions','cosize');
+selector('degreeOptions','degree');
+selector('yearcountOptions','yearcount');
+selector('treatmentOptions','treatment');
+
+var industry={
+    "请选择行业大类":['无'],
+    "IT_通信_电子_互联网": [
+        "互联网/电子商务",
+        "计算机软件",
+        "电子技术/半导体/集成电路",
+        "计算机硬件",
+        "通信/电信/网络设备",
+        "通信/电信运营、增值服务",
+        "网络游戏"
+    ],
+    "金融业": [
+        "基金/证券/期货/投资",
+        "保险",
+        "银行",
+        "信托/担保/拍卖/典当"
+    ],
+    "房地产_建筑业": [
+        "房地产/建筑/建材/工程",
+        "家居/室内设计/装饰装潢",
+        "物业管理/商业中心"
+    ],
+    "商业服务": [
+        "专业服务/咨询(财会/法律/人力资源等)",
+        "广告/会展/公关",
+        "中介服务",
+        "检验/检测/认证",
+        "外包服务"
+    ],
+    "贸易_批发_零售_租赁业": [
+        "快速消费品（食品/饮料/烟酒/日化）",
+        "耐用消费品（服饰/纺织/皮革/家具/家电）",
+        "贸易/进出口",
+        "零售/批发",
+        "租赁服务"
+    ],
+    "文体教育_工艺美术": [
+        "教育/培训/院校",
+        "礼品/玩具/工艺美术/收藏品/奢侈品"
+    ],
+    "生产_加工_制造": [
+        "汽车/摩托车",
+        "大型设备/机电设备/重工业",
+        "加工制造（原料加工/模具）",
+        "仪器仪表及工业自动化",
+        "印刷/包装/造纸",
+        "办公用品及设备",
+        "医药/生物工程",
+        "医疗设备/器械",
+        "航空/航天研究与制造"
+    ],
+    "交通_运输_物流_仓储": [
+        "交通/运输",
+        "物流/仓储"
+    ],
+    "服务业": [
+        "医疗/护理/美容/保健/卫生服务",
+        "酒店/餐饮",
+        "旅游/度假"
+    ],
+    "文化_传媒_娱乐_体育": [
+        "媒体/出版/影视/文化传播",
+        "娱乐/体育/休闲"
+    ],
+    "能源_矿产_环保":[
+        "能源/矿产/采掘/冶炼",
+        "石油/石化/化工",
+        "电气/电力/水利"],
+    "环保_政府_非盈利机构":[
+        "政府/公共事业/非盈利机构",
+        "学术/科研"
+    ],
+    "农_林_牧_渔_其他":[
+        "农/林/牧/渔",
+        "跨领域经营",
+        "其他"]
+};
+var industryNode=document.getElementById('coindustry');
+for(i in industry){
+    option = document.createElement('option');
+    option.setAttribute('value',i);
+    option.innerHTML=i;
+    industryNode.appendChild(option);
+}
+
+
+
+// 级联下拉框方法实现
+function chooseIndustry(handle){
+    var thisvalue=handle.value;
+    var selectionNode = document.createElement('select');
+    selectionNode.id='coindustrydetail';
+    selectionNode.name='coindustrydetail';
+    var options=industry[thisvalue];
+    if(!document.getElementById('coindustrydetail')){
+        handle.parentNode.appendChild(selectionNode);
+        for(i in options){
+            var option=document.createElement('option');
+            option.value=options[i];
+            option.innerHTML=options[i];
+            selectionNode.appendChild(option);
+        }
+        handle.parentNode.appendChild(selectionNode);
+    }else{
+        var node = document.getElementById('coindustrydetail');
+        node.parentNode.removeChild(node);
+        handle.parentNode.appendChild(selectionNode);
+        for(i in options){
+            var option=document.createElement('option');
+            option.value=options[i];
+            option.innerHTML=options[i];
+            selectionNode.appendChild(option);
+        }
+    }
+    handle.parentNode.children[0].style.background = '#93BD7E';
+    handle.parentNode.style.borderStyle='solid';
+    handle.parentNode.style.borderColor='#93BD7E';
+    handle.style.borderStyle='solid';
+    handle.style.borderColor='#93BD7E';
+    handle.style.color='#93BD7E';
+    document.getElementById('coindustrydetail').style.borderStyle='solid';
+    document.getElementById('coindustrydetail').style.borderColor='#93BD7E';
+    document.getElementById('coindustrydetail').style.color='#93BD7E';
+}
+// 标签选择器实现方法
+function selector(optionid,inputid){
+    var Options = document.getElementById(optionid).children;
+    for(var i=0;i<Options.length;i++){
+        Options[i].onclick=function() {
+            for (var j = 0; j < Options.length; j++) {
+                Options[j].style.background = '#B6B6B6';
+            }
+            document.getElementById(inputid).setAttribute('value',this.value);
+            document.getElementById(inputid).style.fontWeight='900';
+            document.getElementById(inputid).style.color='#93BD7E';
+            this.style.background='#93BD7E';
+
+            this.parentNode.parentNode.children[0].style.background = '#93BD7E';
+            this.parentNode.parentNode.style.borderStyle='solid';
+            this.parentNode.parentNode.style.borderColor='#93BD7E';
+        }
+    }
+}
+
+// 文本框输入检查
+function inputchecker(handle){
+    if(handle.value!=''){
+        handle.parentNode.children[0].style.background='#93BD7E';
+        handle.parentNode.style.borderStyle='solid';
+        handle.parentNode.style.borderColor='#93BD7E';
+        handle.style.color='#93BD7E';
+        handle.style.fontWeight='900';
+    }else{
+        handle.parentNode.children[0].style.background='black';
+        handle.parentNode.style.borderStyle='dotted';
+        handle.parentNode.style.borderColor='#808080';
+        handle.style.color='#9a9a9a';
+        handle.style.fontWeight='400';
+
+    }
+}
+//全局检查
+function globalChecker() {
+    var params = {
+        'title': document.getElementsByName('title')[0].value,
+        'coname': document.getElementsByName('coname')[0].value,
+        'cotype': document.getElementsByName('cotype')[0].value,
+        'coindustry': document.getElementsByName('coindustrydetail')[0] ? document.getElementsByName('coindustrydetail')[0].value : '请选择行业大类',
+        'recruiting': document.getElementsByName('recruiting')[0].value,
+        'location': document.getElementsByName('location')[0].value,
+        'yearcount': document.getElementsByName('yearcount')[0].value,
+        'degree': document.getElementsByName('degree')[0].value,
+        'treatment': document.getElementsByName('treatment')[0].value,
+        'opinfo': document.getElementsByName('opinfo')[0].value,
+        'coinfo': document.getElementsByName('coinfo')[0].value,
+        'cosize': document.getElementsByName('cosize')[0].value,
+        'duty': document.getElementsByName('duty')[0].value,
+        'require': document.getElementsByName('require')[0].value,
+        'custname': document.getElementsByName('custname')[0].value,
+        'phone': document.getElementsByName('phone')[0].value,
+        'email': document.getElementsByName('email')[0].value
+    };
+    for (param in params) {
+        if (params[param] == '请选择' || params[param] == '请填写' || params[param] == '请填写/选择' || params[param] == '' || params[param] == '请选择行业大类') {
+            ctnerDiv = findParentDiv(document.getElementsByName(param)[0]);
+            bilibili(ctnerDiv);
+            document.body.scrollTop=ctnerDiv.offsetTop;
+        }else{
+            ctnerDiv = findParentDiv(document.getElementsByName(param)[0]);
+            ctnerDiv.children[0].style.background = '#93BD7E';
+            ctnerDiv.style.borderStyle = 'solid';
+            ctnerDiv.style.borderColor = '#93BD7E';
+
+        }
+    }
+
+
+
+    for (param in params) {
+        if(params[param] == '请选择' || params[param] == '请填写' || params[param] == '请填写/选择' || params[param] == '' || params[param] == '请选择行业大类'){
+            return false
+        }
+    }
+    return alert('所有元素都已填完，可以提交')||true;
+}
+
+//查找父级div元素的方法
+
+function findParentDiv(elem){
+
+    while(elem.parentNode.nodeName!='DIV') {
+        elem = elem.parentNode;
+    }
+    return elem.parentNode;
+
+}
+
+//联系方式输入检查
+function checklinkinfo(handle){
+    var ctnr = findParentDiv(handle);
+    var subtitle = document.getElementsByClassName('subtitle');
+    ctnr.children[0].style.background='#93BD7E';
+    ctnr.style.borderStyle='solid';
+    ctnr.style.borderColor='#66182C';
+    for(input in subtitle){
+        if(subtitle[input].value =='请填写'||subtitle[input].value ==''){
+            ctnr.children[0].style.background='#404040';
+            ctnr.style.borderStyle='dotted';
+            ctnr.style.borderColor='#404040';
+        }
+
+    }
+}
+
+//闪亮一下
+function bilibili(handle){
+    var amont=6;
+    var delay=100;
+    var i=0;
+    var timeid = setInterval(function(){
+        if(i<=amont){
+            handle.children[0].style.background = (i%2===1)?'#FF2117':'#000';
+            handle.style.borderStyle = (i%2===1)?'#FF2117':'#000';
+            handle.style.borderColor = (i%2===1)?'#FF2117':'#000';
+            i++;
+        }else{
+            handle.children[0].style.background = "#000";
+            handle.style.borderStyle = "#000";
+            handle.style.borderColor = "#000";
+            clearInterval(timeid);
+        }
+
+
+    },delay)
+}
+
+</script>
+</html>
+

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:wb=“http://open.weibo.com/wb”>
+<head>
+    <title></title>
+    <meta property="og:type" content="image" />
+    <meta property="og:url" content="data:image/png;base64,{{img}}" />
+    <meta property="og:title" content="图片的显示标题" />
+    <meta property="og:description" content="图片的文字描述" />
+</head>
+<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+<body>
+<a id="imglink" href="s?ssid={{ ssid }}">图片连接在此</a><br><br><br><br>
+<wb:publish action="pubilish" type="web" language="zh_cn" button_type="red" button_size="big" button_text="点此告诉长沙好工作吧" uid="2035814074" default_text="{{ msg }} - 发布工具:http://godjobcs.sinaapp.com/m" tag="长沙好工作" default_image="http://godjobcs.sinaapp.com/s?ssid={{ssid}}" appkey="2SFvCe" ></wb:publish><br><br><br>
+<img src="data:image/png;base64,{{ img }}">
+{{ msg }}
+</body>
+<script>
+    var i=120;
+    function time(){
+        if(i<1){
+            document.getElementById('imglink').innerHTML='图片已经失效，请重新填写表单';
+        }else{
+            document.getElementById('imglink').innerHTML=(i--)+'秒后，图片将会失效';
+        }
+
+    }
+    setInterval("time()",1000)
+</script>
+</html>

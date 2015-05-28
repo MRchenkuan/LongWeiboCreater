@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <style>
+        .box{margin: 10px ;height: 100px;width: 100px;float: left;box-shadow: 0 0 2px grey;border-radius: 5px;}
+        .visitid{background: grey;color: #ffffff}
+        .barbox{border:1px solid #ffffff;box-shadow: 0 0 3px grey;border-radius: 5px;width: 100%;height: 80px;margin: auto;}
+        #barback{width: 60%;height: 30px;border: 1px solid grey;position: relative;margin: 20px 40px;}
+        #bar{position: absolute;width: 1%;background: #a9fff0;height: 100%}
+    </style>
+</head>
+<body>
+</body>
+<script>
+
+    var url='/test/';
+    var elecount = 70;
+
+
+    var barbox=document.createElement('div');
+    barbox.id='barbox';
+    $(barbox).addClass('barbox');
+    var barback = document.createElement('div');
+    barback.id='barback';
+    var bar = document.createElement('div');
+    bar.id ='bar';
+    barback.appendChild(bar);
+    barbox.appendChild(barback);
+    document.body.appendChild(barbox);
+
+
+
+    var list = document.createElement('div');
+    list.id='list';
+    for(i=0;i<elecount;i++){
+        if(i%20==0){
+            var ele = document.createElement('div');
+            ele.innerHTML=i;
+            list.appendChild(ele);
+        }
+    }
+    $(list).find('div').addClass('box');
+    document.body.appendChild(list);
+
+    var progress = 0;
+    ajaxreq();
+
+
+    function ajaxreq(){
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function(data) {
+                progress++;
+                $(bar).attr('style',"width:"+100*progress/elecount+'%');
+                var box = $('.box').get(progress%20==0?);
+                box.innerHTML = data;
+                $(box).addClass('visitid');
+                ajaxreq();
+            }
+        });
+
+    }
+
+</script>
+
+</html>

@@ -1,0 +1,5 @@
+# 获取招聘广告
+getHireAd(limit,type)
+getFlashAd(limit,type)
+getAdReveiw(type)
+getPhotoAd()

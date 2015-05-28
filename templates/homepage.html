@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<table>
+    {% for items in info %}
+    <tr>
+        <td>{{  items.id}}</td>
+        <td>{{  items.title}}</td>
+        <td>{{  items.coname}}</td>
+        <td>{{  items.vistcount}}</td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>
